@@ -17,11 +17,13 @@ class ViewController: UIViewController {
         
         let ref = Database.database().reference()
         
-//lines 21 and and 22 add data to DB
-//        ref.child("someid/name").setValue("Mike")
-//        ref.childByAutoId().setValue(["name":"Tom","role":"Admin","age":30])
+        ref.child
         
-//lines 25 - 30 retrieve data from database
+//lines 21 and and 22 add data to DB
+        ref.child("someid/name").setValue("Mike")
+        ref.childByAutoId().setValue(["name":"Tom","role":"Admin","age":30])
+        
+//lines 26 - 35 retrieve data from database
         
         ref.child("someid/name").observeSingleEvent(of: .value)
         {
@@ -29,9 +31,25 @@ class ViewController: UIViewController {
             (snapshot) in let name = snapshot.value as? String
 
              print(name)
-    
-//            (snapshot) in let employeedata = snapshot.value as? [String:Any]
+            
+//If its more than one key value pair then then you can retrieve the data as a dictionary and get the pieces of data that you need from the dictionary
+            
+            (snapshot) in let employeedata = snapshot.value as? [String:Any]
         }
+
+//lines 37-44
+        //update one value
+        ref.child("someid/name").setValue("ab253")
+        
+        //Update multiple values
+        let updates = ["someid/name": "John", "-LjxaRsdsasc4QkC9HP/name":"David"]
+        
+        ref.updateChildValues(updates)
+        
+//line 49 deletes a value from the database
+        ref.child("someid").removeValue()
+        
+        
         
        
         
